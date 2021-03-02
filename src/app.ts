@@ -16,14 +16,14 @@ import notFoundHandler from './middleware/notFoundHandler'
 
 export async function startServer() {
   const app = express()
-  
+
   // middlewares
   // esta en produccion ?
   if (configHost.dev) {
     app.use(morgan('combined'))
   }
   app.use(bodyParser.json())
-  app.use(bodyParser.urlencoded({extended: false}))
+  app.use(bodyParser.urlencoded({ extended: false }))
   app.use(cookieParser())
   app.use(cors())
 

@@ -11,7 +11,6 @@ export interface typesConfigDb {
   user_db: string
   password_db: string
   database: string
-  databaseTest: string
 }
 
 export interface typesConfigAuth{

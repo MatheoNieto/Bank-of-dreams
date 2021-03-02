@@ -11,10 +11,8 @@
     "build": "npm run clean && tsc",
     "update": "yarn upgrade-interactive --latest",
     "clean": "rimraf ./dist ./data ./coverage",
-    "createmigration": "npx ts-node ./node_modules/typeorm/cli.js migration:create -n",
     "makemigrations": "npx ts-node ./node_modules/.bin/typeorm migration:generate -n",
     "migrate": "npx ts-node ./node_modules/.bin/typeorm migration:run",
-    "createsubscriber": "npx ts-node ./node_modules/.bin/typeorm subscriber:create -n",
     "revermigrate": "npx ts-node ./node_modules/.bin/typeorm migration:revert"
   },
   "dependencies": {
@@ -22,6 +20,7 @@
     "bcryptjs": "2.4.3",
     "body-parser": "1.19.0",
     "cookie-parse": "0.4.0",
+    "cookie-parser": "1.4.5",
     "cors": "2.8.5",
     "dotenv": "8.2.0",
     "express": "4.17.1",

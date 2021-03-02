@@ -1,7 +1,7 @@
 import passport from 'passport'
 import { BasicStrategy } from 'passport-http'
 
-import DatabaseLib from '../../../lib/DatabaseLib'
+import DatabaseLib from '../../../database/databaseLib'
 
 import boom from '@hapi/boom'
 import {compare} from 'bcryptjs'

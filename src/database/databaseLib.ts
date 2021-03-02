@@ -1,4 +1,6 @@
+import { fileURLToPath } from 'url';
 import { connectDB } from './connect'
+import {User} from '../entity/User'
 class DatabaseLib {
   private static instance: DatabaseLib;
   private connection: any
@@ -63,6 +65,16 @@ class DatabaseLib {
 
     return this.connect().then(async (db: any) => {
       return await db.manager.create(entity, data).save()
+    })
+  }
+
+  public loginConsultorio(email:string){
+    return this.connect().then(async (db: any) => {
+      return  await db.manager.findOne(User, {
+        active: true,
+        usermail: email
+      })
+
     })
   }
 

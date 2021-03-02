@@ -4,7 +4,7 @@
   "main": "index.js",
   "repository": "https://github.com/MatheoNieto/Bank-of-dreams.git",
   "author": "Mateo Nieto Hoyos <matheo.developer@gmail.com>",
-  "license": "GPL3",
+  "license": "ISC",
   "scripts": {
     "start": "ts-node src/index.ts",
     "dev": "nodemon src/index.ts --exec ts-node",
@@ -31,6 +31,7 @@
     "passport-http": "0.3.0",
     "passport-jwt": "4.0.0",
     "reflect-metadata": "0.1.13",
+    "socket.io": "^3.1.2",
     "typeorm": "0.2.31"
   },
   "devDependencies": {

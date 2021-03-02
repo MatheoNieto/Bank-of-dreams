@@ -1,0 +1,9 @@
+node_modules
+data
+.git
+LICENSE
+README.md
+.env.example
+package-lock.json
+yarn-error.log
+yarn.lock

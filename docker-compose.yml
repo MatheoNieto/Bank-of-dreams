@@ -1,0 +1,48 @@
+version: '3.3'
+
+services: 
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - node
+
+  node:
+    restart: always
+    build: .
+    env_file: .env
+    environment:
+      - PORT=$PORT
+      - NODE_ENV=$NODE_ENV
+    depends_on: 
+      - mariadb
+    volumes: 
+      - .:/usr/src/app 
+
+  mariadb:
+    image: mariadb:10.2
+    restart: always
+    env_file: .env
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=$USER_DB
+      - MYSQL_DATABASE=$DATABASE
+      - MYSQL_USER=$USER_DB
+      - MYSQL_PASSWORD=$PASSWORD_DB
+    depends_on: 
+      - adminer
+    volumes:
+      - mariadb-data:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+volumes:
+  mariadb-data:

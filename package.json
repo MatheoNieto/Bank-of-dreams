@@ -1,0 +1,53 @@
+{
+  "name": "BankOfDreams",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/MatheoNieto/Bank-of-dreams.git",
+  "author": "Mateo Nieto Hoyos <matheo.developer@gmail.com>",
+  "license": "GPL3",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "dev": "nodemon src/index.ts --exec ts-node",
+    "build": "npm run clean && tsc",
+    "update": "yarn upgrade-interactive --latest",
+    "clean": "rimraf ./dist ./data ./coverage",
+    "createmigration": "npx ts-node ./node_modules/typeorm/cli.js migration:create -n",
+    "makemigrations": "npx ts-node ./node_modules/.bin/typeorm migration:generate -n",
+    "migrate": "npx ts-node ./node_modules/.bin/typeorm migration:run",
+    "createsubscriber": "npx ts-node ./node_modules/.bin/typeorm subscriber:create -n",
+    "revermigrate": "npx ts-node ./node_modules/.bin/typeorm migration:revert"
+  },
+  "dependencies": {
+    "@hapi/boom": "9.1.1",
+    "bcryptjs": "2.4.3",
+    "body-parser": "1.19.0",
+    "cookie-parse": "0.4.0",
+    "cors": "2.8.5",
+    "dotenv": "8.2.0",
+    "express": "4.17.1",
+    "jsonwebtoken": "8.5.1",
+    "mysql": "2.18.1",
+    "passport": "0.4.1",
+    "passport-http": "0.3.0",
+    "passport-jwt": "4.0.0",
+    "reflect-metadata": "0.1.13",
+    "typeorm": "0.2.31"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "2.4.2",
+    "@types/cookie-parser": "1.4.2",
+    "@types/cors": "2.8.10",
+    "@types/express": "4.17.11",
+    "@types/jsonwebtoken": "8.5.0",
+    "@types/morgan": "1.9.2",
+    "@types/node": "14.14.31",
+    "@types/passport": "1.0.6",
+    "@types/passport-http": "0.3.8",
+    "@types/passport-jwt": "3.0.5",
+    "morgan": "1.10.0",
+    "nodemon": "2.0.7",
+    "rimraf": "3.0.2",
+    "ts-node": "9.1.1",
+    "typescript": "4.2.2"
+  }
+}

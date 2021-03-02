@@ -1,12 +1,16 @@
 import express from 'express'
 
+import validationHandler from '../../middleware/validationHandler'
+import { createSchema, dataFilter } from '../../schemas/client'
 import ClientService from './service'
+
 import * as response from '../../network/response'
 
 const Router = express.Router()
 const clientService = new ClientService()
 
 Router.get('/',
+  validationHandler(dataFilter, 'params'),
   async (req, res, next) => {
     try {
       const clients = await clientService.getClients(req)
@@ -31,6 +35,7 @@ Router.get('/:clientId',
   })
 
 Router.post('/',
+  validationHandler(createSchema),
   async (req, res, next) => {
     try {
       const { body: client } = req

@@ -1,41 +1,43 @@
 import express from 'express'
 
+import ClientService from './service'
 import * as response from '../../network/response'
 
 const Router = express.Router()
+const clientService = new ClientService()
 
-Router.get('/', 
-async (req, res, next) => {
-  try {
-    const clients= ''
-    response.success(req, res, 'Client', clients, 200)
+Router.get('/',
+  async (req, res, next) => {
+    try {
+      const clients = await clientService.getClients(req)
+      response.success(req, res, 'Client', clients, 200)
 
-  } catch (err) {
-    next(err)
-  }
-})
+    } catch (err) {
+      next(err)
+    }
+  })
 
 Router.get('/:clientId',
   async (req, res, next) => {
-  try {
-    const { clientId } = req.params
+    try {
+      const { clientId } = req.params
 
-    const client = ''
-    response.success(req, res, 'CLIENT', client, 200)
+      const client = await clientService.getClient(req, clientId)
+      response.success(req, res, 'CLIENT', client, 200)
 
-  } catch (err) {
-    next(err)
-  }
-})
+    } catch (err) {
+      next(err)
+    }
+  })
 
-Router.post('/', 
+Router.post('/',
   async (req, res, next) => {
     try {
-      const { body: client} = req
-  
-      const newClient = ''
+      const { body: client } = req
+
+      const newClient = await clientService.createClient(req, client)
       response.success(req, res, 'Client created.', newClient, 201)
-      
+
     } catch (err) {
       next(err)
     }

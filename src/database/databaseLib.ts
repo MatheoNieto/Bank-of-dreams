@@ -1,5 +1,5 @@
-import { fileURLToPath } from 'url';
 import { connectDB } from './connect'
+
 import {User} from '../entity/User'
 class DatabaseLib {
   private static instance: DatabaseLib;
@@ -23,8 +23,8 @@ class DatabaseLib {
             resolve(data)
           })
           .catch((err: any) => {
-            reject(err)
             console.log(`[DATABASE] Database is not connected error=> ${err}`)
+            reject(err)
           })
       })
     }
@@ -32,12 +32,11 @@ class DatabaseLib {
     return this.connection
   }
 
-  public getAll(entity: any, consultorio: any) {
+  public getAll(entity: any) {
     return this.connect().then(async (db: any) => {
       return await db.manager.find(entity, {
         where: {
           active: true,
-          consultorio
         }
       })
     })

@@ -13,7 +13,7 @@ Router.get('/',
   validationHandler(dataFilter, 'params'),
   async (req, res, next) => {
     try {
-      const clients = await clientService.getClients(req)
+      const clients = await clientService.listClient(req)
       response.success(req, res, 'Client', clients, 200)
 
     } catch (err) {
@@ -26,7 +26,7 @@ Router.get('/:clientId',
     try {
       const { clientId } = req.params
 
-      const client = await clientService.getClient(req, clientId)
+      const client = await clientService.listClient(req, clientId)
       response.success(req, res, 'CLIENT', client, 200)
 
     } catch (err) {
@@ -40,7 +40,7 @@ Router.post('/',
     try {
       const { body: client } = req
 
-      const newClient = await clientService.createClient(req, client)
+      const newClient = await clientService.createData(req, client)
       response.success(req, res, 'Client created.', newClient, 201)
 
     } catch (err) {

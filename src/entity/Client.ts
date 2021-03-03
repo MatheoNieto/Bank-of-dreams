@@ -10,23 +10,20 @@ import {
 
 import {Product} from './Product'
 
-enum Genero {
-  m = "Masculino",
-  f = "Femenino",
+enum Gender {
+  m = "Male",
+  f = "Female",
 }
 
-enum EstadoCivil {
-  soltero = 'Soltero(a)',
-  casado = 'Casado(a)',
-  viudo = 'Viudo(a)',
-  divorciado = 'Divorciado(a)',
-  union_libre = 'Unión libre',
+enum CivilStatus {
+  married = "Married",
+  single = "Single",
+  divorced = "Divorced"
 }
 
-enum TipoDocumento {
-  cedula = 'Cédula',
-  ti = 'Tarjeta de identidad',
-  pa = 'Pasaporte',
+enum TypeDocuments {
+  dni = 'Identification card',
+  pa = 'Passport',
 }
 
 
@@ -36,8 +33,8 @@ export class Client extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   id!: number
 
-  @Column({ type: 'enum', enum: TipoDocumento, default: TipoDocumento.cedula })
-  type_document!: TipoDocumento
+  @Column({ type: 'enum', enum: TypeDocuments, default: TypeDocuments.dni })
+  type_document!: TypeDocuments
 
   @Column('varchar', { length: 50 })
   number_document!: string
@@ -60,14 +57,14 @@ export class Client extends BaseEntity {
   @Column({ nullable: true })
   date_birtday!: Date
 
-  @Column({ type: 'enum', enum: Genero, default: Genero.m })
-  gender!: Genero
+  @Column({ type: 'enum', enum: Gender, default: Gender.m })
+  gender!: Gender
 
   @OneToMany(type => Product, product => product.id)
   product!: Product
 
-  @Column({ type: 'enum', enum: EstadoCivil, default: EstadoCivil.soltero })
-  civil_status!: EstadoCivil
+  @Column({ type: 'enum', enum: CivilStatus, default: CivilStatus.single })
+  civil_status!: CivilStatus
 
   @Column('boolean', { default: true })
   active!: boolean;

@@ -31,14 +31,19 @@ export const createSchema = Joi.object({
     .email()
     .required(),
 
-  date_birtday: Joi.date()
-    .required(),
+  date_birtday: Joi.date(),
 
   gender: Joi.string()
     .required(),
 
   civil_status: Joi.string()
     .required(),
+
+  // password:
+  //   Joi.string()
+  //     .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
+  //     .min(8)
+  //     .required(),
 
 })
 

@@ -5,9 +5,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BaseEntity,
-  AfterUpdate
+  AfterUpdate,
+  OneToOne,
+  JoinColumn
 } from 'typeorm'
 
+import { Client } from './Client'
 
 @Entity()
 export class User extends BaseEntity {
@@ -15,8 +18,9 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   id!: number
 
-  @Column('varchar', { length: 100 })
-  name!: string
+  @OneToOne(type => Client)
+  @JoinColumn()
+  client!: Client
 
   @Column('varchar', { length: 150, unique: true })
   usermail!: string

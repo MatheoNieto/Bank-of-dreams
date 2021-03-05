@@ -14,6 +14,7 @@ export const createSchema = Joi.object({
     .required(),
 
   type_document: Joi.string()
+    .valid('Identification card', 'Passport')
     .required(),
 
   number_document: Joi.string()
@@ -34,25 +35,32 @@ export const createSchema = Joi.object({
   date_birtday: Joi.date(),
 
   gender: Joi.string()
+    .valid('Male', 'Female')
     .required(),
 
   civil_status: Joi.string()
+    .valid('Married','Single','Divorced')
     .required(),
 
-  // password:
-  //   Joi.string()
-  //     .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
-  //     .min(8)
-  //     .required(),
+  password:
+    Joi.string()
+      .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
+      .min(8)
+      .required(),
 
 })
 
 export const dataFilter = Joi.object({
 
   name: Joi.string(),
+
   last_name: Joi.string(),
-  type_document: Joi.string(),
+
+  type_document: Joi.string()
+  .valid('Identification card', 'Passport'),
+
   number_document: Joi.string(),
+  
   email: Joi.string()
     .email()
 })

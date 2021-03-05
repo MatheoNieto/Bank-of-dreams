@@ -40,7 +40,7 @@ Router.post('/',
     try {
       const { body: client } = req
 
-      const newClient = await clientService.createData(req, client)
+      const newClient = await clientService.createData(client)
       response.success(req, res, 'Client created.', newClient, 201)
 
     } catch (err) {

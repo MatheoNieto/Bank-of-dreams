@@ -18,8 +18,7 @@ class SuperClass {
         active: true
       }
     })
-
-    return !this.isEmptyObject(dataExist)
+    return dataExist != undefined
   }
 }
 

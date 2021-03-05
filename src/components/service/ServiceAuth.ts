@@ -8,13 +8,21 @@ import serviceBase from './ServiceBase'
 import { configAuth } from '../../config/settings'
 
 class ServiceAuth extends serviceBase {
+  private static instance: ServiceAuth;
+
+  public static getInstance(): ServiceAuth {
+    if (!ServiceAuth.instance) {
+      ServiceAuth.instance = new ServiceAuth();
+    }
+    return ServiceAuth.instance;
+  }
 
   private async encriptedPassword(password: string) {
     const hashedPassword = await hash(password, 12)
     return hashedPassword
   }
 
-  public async createUser(dataUser: User) {
+  public async createUser(dataUser: any) {
 
     dataUser['password'] = await this.encriptedPassword(dataUser.password)
     const newUser = await this.createData(User, dataUser)

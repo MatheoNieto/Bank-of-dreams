@@ -1,15 +1,8 @@
 import boom from '@hapi/boom'
 
 import SuperClass from './SuperClass'
-import ValidateDataExist from './ValidateDataExist'
 
 class serviceBase extends SuperClass {
-  protected validateDataExist: ValidateDataExist
-
-  constructor() {
-    super()
-    this.validateDataExist = ValidateDataExist.getInstance()
-  }
 
   private filterData(filter: any, data: any) {
     if (this.isEmptyObject(filter)) {
@@ -47,10 +40,9 @@ class serviceBase extends SuperClass {
     })
   }
 
-  createData(entity: any, request: any, data: any) {
+  createData(entity: any, data: any, request?: any, ) {
     return new Promise(async (resolve, reject) => {
-
-      const existData = await this.validateDataExist.valid(entity, data)
+      const existData = await this.validDataExist(entity, data)
 
       if (existData) {
         reject(boom.badRequest('This information already exist.'))

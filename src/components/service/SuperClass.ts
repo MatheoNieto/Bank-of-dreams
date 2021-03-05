@@ -10,6 +10,17 @@ class SuperClass {
   isEmptyObject(obj:any){
     return JSON.stringify(obj) == '{}';
   }
+
+  async validDataExist(entity: any, data: any) {
+    const dataExist = await this.databaseLib.getByQuery(entity, {
+      where: {
+        ...data,
+        active: true
+      }
+    })
+
+    return !this.isEmptyObject(dataExist)
+  }
 }
 
 export default SuperClass

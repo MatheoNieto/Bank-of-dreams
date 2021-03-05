@@ -22,16 +22,19 @@ class serviceBase extends SuperClass {
 
   listData(entity: any, request?: any, dataId?: string) {
     return new Promise(async (resolve, reject) => {
-      let optionFilter, get_data
+      let optionFilter, get_data, client
 
       if (request) {
         optionFilter = request.query
+        client = request.user
       }
 
       if (!dataId) {
         get_data = await this.databaseLib.getAll(entity)
-      } else {
+      } else if (!client) {
         get_data = await this.databaseLib.getById(entity, dataId)
+      } else {
+        get_data = await this.databaseLib.getByClient(entity, client)
       }
 
       if (!get_data) {

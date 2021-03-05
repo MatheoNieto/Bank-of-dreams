@@ -26,6 +26,9 @@ export class Product extends BaseEntity {
   @ManyToOne(type => TypeProduct, typeProduct => typeProduct.id)
   type_product!: TypeProduct
 
+  @Column('double', { default: 0 })
+  saldo!: number
+
   @Column('boolean', { default: true })
   active!: boolean;
 

@@ -72,6 +72,18 @@ class DatabaseLib {
     })
   }
 
+  public getByClient(entity: any, client: any) {
+
+    return this.connect().then(async (db: any) => {
+      return await db.manager.findOne(entity, {
+        where:{
+          client,
+          active:true
+        }
+      })
+    })
+  }
+
   public create(entity: any, data: any) {
 
     return this.connect().then(async (db: any) => {

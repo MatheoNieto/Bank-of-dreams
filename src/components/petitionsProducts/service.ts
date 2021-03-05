@@ -51,22 +51,30 @@ class ServicePetitionProducts extends ServiceBase {
     })
   }
 
+
+
   attendSolicitude(request: Request, solicitudId: any, newState: any) {
     return new Promise(async (resolve, reject) => {
       const data = {
         ...newState
       }
+      const PetitionProduct = await this.getPetitionProduct(solicitudId)
 
-      const closeSolicitude = await this.validPetitionClose(solicitudId)
+      if (!PetitionProduct) {
+        reject(boom.notFound('Petition not found.'))
+        return
+      }
 
-      if (!closeSolicitude) {
+      if (!PetitionProduct.close) {
 
         if (data.state_petition == 'Accepted') {
           await this.createProduct(solicitudId)
         }
+
         data['close'] = true
-        const solcitudAttended= await this.updateData(PetitonProduct, request, solicitudId, data)
-        resolve(solcitudAttended)
+        const solcitudAttended = await this.updateData(PetitonProduct, solicitudId, data, request)
+        const soliccitud = await this.getPetitionProduct(solicitudId)
+        resolve(soliccitud)
       }
 
       reject(boom.badRequest('The solicitude already state close.'))
@@ -74,9 +82,9 @@ class ServicePetitionProducts extends ServiceBase {
     })
   }
 
-  private async validPetitionClose(solicitudId: any) {
+  private async getPetitionProduct(solicitudId: any) {
     const getProductPetition = await this.databaseLib.getById(PetitonProduct, solicitudId)
-    return getProductPetition.close
+    return getProductPetition
   }
 
   private async numberRamdon() {

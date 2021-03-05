@@ -3,6 +3,8 @@ import passport from 'passport'
 
 import validationHandler from '../../middleware/validationHandler'
 import ServiceTransaction from './service'
+import { createSchema } from '../../schemas/transaction'
+
 
 import * as response from '../../network/response'
 
@@ -25,11 +27,12 @@ Router.get('/',
 
 Router.post('/:productId',
   passport.authenticate('jwt', { session: false }),
+  validationHandler(createSchema),
   async (req, res, next) => {
     try {
       const { body: transaction, params: { productId } } = req
 
-      const newTrasaction = ''
+      const newTrasaction = await serviceTransaction.createTransaction(req, productId, transaction)
       response.success(req, res, 'New transaction', newTrasaction, 200)
 
     } catch (err) {

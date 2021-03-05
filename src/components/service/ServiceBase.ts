@@ -59,7 +59,7 @@ class serviceBase extends SuperClass {
     })
   }
 
-  updateData(entity: any, request: any, dataId: any, newdata: any) {
+  updateData(entity: any, dataId: any, newdata: any, request?: any) {
     return new Promise(async (resolve, reject) => {
 
       const dataUpdated = await this.databaseLib.update(entity, dataId, newdata)
@@ -67,10 +67,10 @@ class serviceBase extends SuperClass {
     })
   }
 
-  deleteData(entity:any, dataId: any) {
+  deleteData(entity: any, dataId: any) {
     return new Promise(async (resolve, reject) => {
 
-      await this.databaseLib.update(entity, dataId, {active:false})
+      await this.databaseLib.update(entity, dataId, { active: false })
       resolve('Data delete')
     })
   }

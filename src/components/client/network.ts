@@ -10,7 +10,7 @@ const Router = express.Router()
 const serviceClient = ServiceClient.getInstance()
 
 Router.get('/',
-  validationHandler(dataFilter, 'params'),
+  validationHandler(dataFilter, 'query'),
   async (req, res, next) => {
     try {
       const clients = await serviceClient.listClient(req)

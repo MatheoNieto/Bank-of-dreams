@@ -2,6 +2,7 @@ import boom from '@hapi/boom'
 import { Request } from 'express'
 
 import ServiceBase from '../service/ServiceBase'
+import { HistoryTransaction } from '../../entity/HistoryTransaction'
 import { Product } from '../../entity/Product'
 
 class ServiceTransaction extends ServiceBase {
@@ -56,6 +57,7 @@ class ServiceTransaction extends ServiceBase {
     }
 
     const newSaldo = saldo - valorMovement
+    await this.createHistoryTransaction(product,data, newSaldo, 'Shoping')
     await this.updateData(Product, product.id, { saldo: newSaldo })
     return await this.getProduct(product.id)
   }
@@ -65,8 +67,19 @@ class ServiceTransaction extends ServiceBase {
     const valorMovement = parseInt(data.valor)
 
     const newSaldo = saldo + valorMovement
+    await this.createHistoryTransaction(product, data, newSaldo, 'Consignment')
     await this.updateData(Product, product.id, { saldo: newSaldo })
     return await this.getProduct(product.id)
+  }
+
+  private async createHistoryTransaction(product:any, data:any, newValue:any, type_trasaction:string){
+    await this.databaseLib.create(HistoryTransaction,{
+      type_trasaction,
+      detail_trasaction: data.detail_trasaction,
+      product,
+      before_saldo: product.saldo,
+      new_saldo: newValue
+    })
   }
 
 }

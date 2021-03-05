@@ -5,8 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BaseEntity,
-  ManyToMany,
-  JoinTable
+  ManyToOne
 } from 'typeorm'
 
 import { Product } from './Product'
@@ -24,8 +23,7 @@ export class HistoryTransaction extends BaseEntity {
   @Column('varchar', { length: 100 })
   detail_trasaction!: string
 
-  @ManyToMany(type => Product)
-  @JoinTable()
+  @ManyToOne(type => Product, product => product.id)
   product!: Product[]
 
   @Column('double', { default: 0 })

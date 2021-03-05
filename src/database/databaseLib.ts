@@ -67,7 +67,7 @@ class DatabaseLib {
     })
   }
 
-  public loginConsultorio(email:string){
+  public loginUser(email:string){
     return this.connect().then(async (db: any) => {
       return  await db.manager.findOne(User, {
         active: true,

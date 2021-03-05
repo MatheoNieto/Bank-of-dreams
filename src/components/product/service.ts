@@ -1,9 +1,7 @@
-import boom from '@hapi/boom'
 import { Request } from 'express'
 
 import ServiceBase from '../service/ServiceBase'
 import { Product } from '../../entity/Product'
-
 
 class ServiceProducts extends ServiceBase {
   private static instance: ServiceProducts
@@ -17,6 +15,14 @@ class ServiceProducts extends ServiceBase {
 
   async listProduct(request: Request, productId?: any) {
     return await this.listData(Product, request, productId)
+  }
+
+  deleteData(dataId: any) {
+    return new Promise(async (resolve) => {
+
+      await this.databaseLib.update(Product, dataId, {active:false})
+      resolve('Account canceled.')
+    })
   }
 
 }

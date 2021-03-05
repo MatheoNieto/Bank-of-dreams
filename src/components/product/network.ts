@@ -12,9 +12,10 @@ const Router = express.Router()
 const serviceProducts = ServiceProducts.getInstance()
 
 Router.get('/',
+  passport.authenticate('jwt', { session: false }),
   async (req, res, next) => {
     try {
-      const products = ''
+      const products = await serviceProducts.listProduct(req)
       response.success(req, res, 'Products', products, 200)
 
     } catch (err) {
@@ -23,12 +24,27 @@ Router.get('/',
   })
 
 Router.get('/:productId',
+  passport.authenticate('jwt', { session: false }),
   async (req, res, next) => {
     try {
       const { productId } = req.params
 
-      const product = ''
-      response.success(req, res, 'PRODUCT', product, 200)
+      const product = await serviceProducts.listProduct(req, productId)
+      response.success(req, res, 'Product', product, 200)
+
+    } catch (err) {
+      next(err)
+    }
+  })
+
+Router.delete('/:productId',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res, next) => {
+    try {
+      const { productId } = req.params
+
+      const product = await serviceProducts.listProduct(req, productId)
+      response.success(req, res, 'Product', product, 200)
 
     } catch (err) {
       next(err)

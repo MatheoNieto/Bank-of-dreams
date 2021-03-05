@@ -67,8 +67,12 @@ class serviceBase extends SuperClass {
     })
   }
 
-  deleteData(request: any, dataId: any) {
+  deleteData(entity:any, dataId: any) {
+    return new Promise(async (resolve, reject) => {
 
+      await this.databaseLib.update(entity, dataId, {active:false})
+      resolve('Data delete')
+    })
   }
 
 }

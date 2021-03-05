@@ -90,6 +90,16 @@ class DatabaseLib {
     })
   }
 
+  public update(entity:any, dataId:any, newData:any){
+    return this.connect().then(async (db: any) => {
+      return await db.manager.update(
+        entity,
+        dataId,
+        newData
+      )
+    })
+  }
+
 }
 
 export default DatabaseLib

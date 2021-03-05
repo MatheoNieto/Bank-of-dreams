@@ -1,3 +1,4 @@
+
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -5,22 +6,28 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BaseEntity,
-  ManyToOne
+  ManyToOne,
+  AfterUpdate
 } from 'typeorm'
 
+import {Client} from './Client'
 import {TypeProduct} from './TypeProduct'
+import {stateSolicitude} from '../prototypes/typesPetitionProduct'
 
 @Entity()
-export class Product extends BaseEntity {
+export class PetitonProduct extends BaseEntity {
 
   @PrimaryGeneratedColumn('increment')
   id!: number
 
-  @Column('varchar', { length: 100, unique: true })
-  number_product!: string
+  @ManyToOne(type => Client, client => client.id)
+  client!: Client
 
   @ManyToOne(type => TypeProduct, typeProduct => typeProduct.id)
-  type_product!: TypeProduct
+  type_product!:TypeProduct
+
+  @Column({ type: 'enum', enum: stateSolicitude, default: stateSolicitude.pending })
+  state_petition!: stateSolicitude
 
   @Column('boolean', { default: true })
   active!: boolean;
@@ -30,5 +37,10 @@ export class Product extends BaseEntity {
 
   @UpdateDateColumn({ type: 'timestamp'})
   updateAt!: Date
+
+  @AfterUpdate()
+  updateDates() {
+    console.log("==>updatadddekjsdkfj")
+  }
 
 }

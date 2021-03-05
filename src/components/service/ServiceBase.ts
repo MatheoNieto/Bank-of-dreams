@@ -3,7 +3,7 @@ import boom from '@hapi/boom'
 import SuperClass from './SuperClass'
 
 class serviceBase extends SuperClass {
-  
+
   private filterData(filter: any, data: any) {
     if (this.isEmptyObject(filter)) {
       return data
@@ -24,7 +24,7 @@ class serviceBase extends SuperClass {
     return new Promise(async (resolve, reject) => {
       let optionFilter, get_data
 
-      if(request){
+      if (request) {
         optionFilter = request.query
       }
 
@@ -43,7 +43,7 @@ class serviceBase extends SuperClass {
     })
   }
 
-  createData(entity: any, data: any, request?: any, ) {
+  createData(entity: any, data: any, request?: any,) {
     return new Promise(async (resolve, reject) => {
       const existData = await this.validDataExist(entity, data)
 
@@ -56,8 +56,12 @@ class serviceBase extends SuperClass {
     })
   }
 
-  updateData(request: any, dataId: any, data: any) {
+  updateData(entity: any, request: any, dataId: any, newdata: any) {
+    return new Promise(async (resolve, reject) => {
 
+      await this.databaseLib.update(entity, dataId, newdata)
+      resolve('Update success')
+    })
   }
 
   deleteData(request: any, dataId: any) {

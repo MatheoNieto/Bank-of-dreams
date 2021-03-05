@@ -18,7 +18,9 @@ passport.use(
       const databaseLib = DatabaseLib.getInstance()
 
       try {
-        const getClient = databaseLib.getByQuery(Client, { id: tokenPayload.clientId })
+        const getClient = await databaseLib.getByQuery(Client, { id: tokenPayload.clientId })
+
+        console.log("=>[getClient]",getClient)
 
         if (!getClient) {
           return cb(boom.unauthorized(), false);

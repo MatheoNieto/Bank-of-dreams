@@ -4,23 +4,17 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  BaseEntity,
-  ManyToOne
+  BaseEntity
 } from 'typeorm'
 
-import {TypeProduct} from './TypeProduct'
-
 @Entity()
-export class Product extends BaseEntity {
+export class TypeProduct extends BaseEntity {
 
   @PrimaryGeneratedColumn('increment')
   id!: number
 
-  @Column('varchar', { length: 100, unique: true })
-  number_product!: string
-
-  @ManyToOne(type => TypeProduct, typeProduct => typeProduct.id)
-  type_product!: TypeProduct
+  @Column('varchar', { length: 100, unique:true })
+  name!: string
 
   @Column('boolean', { default: true })
   active!: boolean;

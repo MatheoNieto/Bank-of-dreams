@@ -9,24 +9,7 @@ import {
 } from 'typeorm'
 
 import {Product} from './Product'
-
-enum Gender {
-  m = "Male",
-  f = "Female",
-}
-
-enum CivilStatus {
-  married = "Married",
-  single = "Single",
-  divorced = "Divorced"
-}
-
-enum TypeDocuments {
-  dni = 'Identification card',
-  pa = 'Passport',
-}
-
-
+import {CivilStatus, Gender, TypeDocuments} from '../prototypes/typesClients'
 @Entity()
 export class Client extends BaseEntity {
 

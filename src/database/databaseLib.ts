@@ -70,10 +70,23 @@ class DatabaseLib {
   public loginUser(email:string){
     return this.connect().then(async (db: any) => {
       return  await db.manager.findOne(User, {
+        relations: ['client'],
+        where: {
         active: true,
         usermail: email
-      })
+      }
+    })
 
+    })
+  }
+
+  public multipleCreate(entity:any, data:any){
+    return this.connect().then(async (db: any) => {
+      await db.createQueryBuilder()
+      .insert()
+      .into(entity)
+      .values(data)
+      .execute();
     })
   }
 

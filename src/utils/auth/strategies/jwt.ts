@@ -3,7 +3,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt'
 
 import boom from '@hapi/boom'
 
-import { User } from '../../../entity/User'
+import { Client } from '../../../entity/Client'
 import DatabaseLib from '../../../database/databaseLib'
 
 import { configAuth } from '../../../config/settings'
@@ -18,15 +18,13 @@ passport.use(
       const databaseLib = DatabaseLib.getInstance()
 
       try {
-        const getUser = databaseLib.getByQuery(User, { id: tokenPayload.userId })
+        const getClient = databaseLib.getByQuery(Client, { id: tokenPayload.clientId })
 
-        if (!getUser) {
+        if (!getClient) {
           return cb(boom.unauthorized(), false);
         }
 
-        delete getUser.password;
-
-        cb(null, { ...getUser });
+        cb(null, { ...getClient });
 
       } catch (err) {
         return cb(err);

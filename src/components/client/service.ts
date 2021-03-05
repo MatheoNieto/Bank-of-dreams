@@ -1,19 +1,28 @@
 import boom from '@hapi/boom'
+import { Request } from 'express'
 
 import serviceBase from '../service/ServiceBase'
 import ServiceAuth from '../service/ServiceAuth'
 
 import { Client } from '../../entity/Client'
 
-class ClientService extends serviceBase {
+class ServiceClient extends serviceBase {
+  private static instance: ServiceClient
   private serviceAuth: ServiceAuth
 
-  constructor(){
+  constructor() {
     super()
     this.serviceAuth = ServiceAuth.getInstance()
   }
   
-  async listClient(request: any, clientId?: any) {
+  public static getInstance(): ServiceClient {
+    if (!ServiceClient.instance) {
+      ServiceClient.instance = new ServiceClient()
+    }
+    return ServiceClient.instance
+  }
+
+  async listClient(request: Request, clientId?: any) {
     return await this.listData(Client, request, clientId)
   }
 
@@ -49,4 +58,4 @@ class ClientService extends serviceBase {
 }
 
 
-export default ClientService
+export default ServiceClient

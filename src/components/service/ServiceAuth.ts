@@ -36,6 +36,7 @@ class ServiceAuth extends serviceBase {
   private createAccessToken(user: any) {
     const payload = {
       userId: user.id,
+      clientId: user.client.id,
     }
 
     return sign(payload, configAuth.access_token_secret!, {
@@ -46,6 +47,7 @@ class ServiceAuth extends serviceBase {
   private createRefreshToken(user: any) {
     const payload = {
       userId: user.id,
+      clientId: user.client.id,
     }
 
     return sign(payload,

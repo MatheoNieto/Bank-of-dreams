@@ -1,5 +1,4 @@
 import DatabaseLib from '../../database/databaseLib'
-
 class SuperClass {
   protected databaseLib: DatabaseLib
 

@@ -5,10 +5,9 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BaseEntity,
-  ManyToOne
 } from 'typeorm'
 
-import {TypeProduct} from './TypeProduct'
+import {TypeProducts} from '../prototypes/typesProducts'
 
 @Entity()
 export class Product extends BaseEntity {
@@ -19,8 +18,8 @@ export class Product extends BaseEntity {
   @Column('varchar', { length: 100, unique: true })
   number_product!: string
 
-  @ManyToOne(type => TypeProduct, typeProduct => typeProduct.id)
-  type_product!: TypeProduct
+  @Column({ type: 'enum', enum: TypeProducts, default: TypeProducts.credit_card })
+  type_product!: TypeProducts
 
   @Column('boolean', { default: true })
   active!: boolean;

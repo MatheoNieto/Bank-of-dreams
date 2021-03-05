@@ -2,18 +2,18 @@ import express from 'express'
 
 import validationHandler from '../../middleware/validationHandler'
 import { createSchema, dataFilter } from '../../schemas/client'
-import ClientService from './service'
+import ServiceClient from './service'
 
 import * as response from '../../network/response'
 
 const Router = express.Router()
-const clientService = new ClientService()
+const serviceClient = ServiceClient.getInstance()
 
 Router.get('/',
   validationHandler(dataFilter, 'params'),
   async (req, res, next) => {
     try {
-      const clients = await clientService.listClient(req)
+      const clients = await serviceClient.listClient(req)
       response.success(req, res, 'Client', clients, 200)
 
     } catch (err) {
@@ -26,7 +26,7 @@ Router.get('/:clientId',
     try {
       const { clientId } = req.params
 
-      const client = await clientService.listClient(req, clientId)
+      const client = await serviceClient.listClient(req, clientId)
       response.success(req, res, 'CLIENT', client, 200)
 
     } catch (err) {
@@ -40,7 +40,7 @@ Router.post('/',
     try {
       const { body: client } = req
 
-      const newClient = await clientService.createData(client)
+      const newClient = await serviceClient.createData(client)
       response.success(req, res, 'Client created.', newClient, 201)
 
     } catch (err) {

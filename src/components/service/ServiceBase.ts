@@ -3,7 +3,7 @@ import boom from '@hapi/boom'
 import SuperClass from './SuperClass'
 
 class serviceBase extends SuperClass {
-
+  
   private filterData(filter: any, data: any) {
     if (this.isEmptyObject(filter)) {
       return data
@@ -20,10 +20,13 @@ class serviceBase extends SuperClass {
     return data
   }
 
-  listData(entity: any, request: any, dataId?: string) {
+  listData(entity: any, request?: any, dataId?: string) {
     return new Promise(async (resolve, reject) => {
-      const optionFilter = request.query
-      let get_data
+      let optionFilter, get_data
+
+      if(request){
+        optionFilter = request.query
+      }
 
       if (!dataId) {
         get_data = await this.databaseLib.getAll(entity)

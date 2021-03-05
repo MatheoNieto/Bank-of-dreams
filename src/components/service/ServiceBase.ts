@@ -29,15 +29,21 @@ class serviceBase extends SuperClass {
         client = request.user
       }
 
-      if (!dataId) {
-        get_data = await this.databaseLib.getAll(entity)
-      } else if (!client) {
-        get_data = await this.databaseLib.getById(entity, dataId)
+      if (!this.isEmptyObject(client)) {
+        if (!dataId) {
+          get_data = await this.databaseLib.getByClient(entity, client)
+        } else {
+          get_data = await this.databaseLib.getByClientId(entity, client, dataId)
+        }
       } else {
-        get_data = await this.databaseLib.getByClient(entity, client)
+        if (!dataId) {
+          get_data = await this.databaseLib.getAll(entity)
+        } else {
+          get_data = await this.databaseLib.getById(entity, dataId)
+        }
       }
 
-      if (!get_data) {
+      if (!get_data || get_data.length == 0) {
         reject(boom.notFound('Data not found.'))
       }
 

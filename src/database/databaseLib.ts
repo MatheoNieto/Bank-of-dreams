@@ -72,12 +72,25 @@ class DatabaseLib {
     })
   }
 
-  public getByClient(entity: any, client: any) {
+  public getByClient(entity: any, dataClient: any) {
 
     return this.connect().then(async (db: any) => {
-      return await db.manager.findOne(entity, {
+      return await db.manager.find(entity, {
         where:{
-          client,
+          client: dataClient,
+          active:true
+        }
+      })
+    })
+  }
+ 
+  public getByClientId(entity: any, dataClient: any, dataId:any) {
+
+    return this.connect().then(async (db: any) => {
+      return await db.manager.find(entity, {
+        where:{
+          id: dataId,
+          client: dataClient,
           active:true
         }
       })

@@ -1,10 +1,13 @@
 import boom from '@hapi/boom'
 import { Request } from 'express'
+import CreditCardGenerator from '../service/CreditCardGenerator'
+import randomize from 'randomatic'
 
 import ServiceBase from '../service/ServiceBase'
 import { Product } from '../../entity/Product'
 import { PetitonProduct } from '../../entity/PetitionProduct'
 import { TypeProduct } from '../../entity/TypeProduct'
+
 
 class ServiceProducts extends ServiceBase {
   private static instance: ServiceProducts
@@ -73,11 +76,56 @@ class ServiceProducts extends ServiceBase {
         ...newState
       }
 
-      await this.updateData(PetitonProduct, request, solicitudId, data)
+      const closeSolicitude = await this.validPetitionClose(solicitudId)
 
-      resolve(`Petition product ${data.state_petition} success.`)
+      if (!closeSolicitude) {
+
+        if (data.state_petition == 'Accepted') {
+          await this.createProduct(solicitudId)
+        }
+        await this.updateData(PetitonProduct, request, solicitudId, data)
+        resolve(`Petition product ${data.state_petition} success.`)
+      }
+
+      reject(boom.badRequest('The solicitude already state close.'))
 
     })
+  }
+
+  private async validPetitionClose(solicitudId: any) {
+    const getProductPetition = await this.databaseLib.getById(PetitonProduct, solicitudId)
+    return getProductPetition.close
+  }
+
+  private async numberRamdon() {
+    return randomize('0', 10)
+  }
+
+  private async generateNumberAccount(typeProduct: string) {
+    const creditCardGenerator = CreditCardGenerator.getInstance()
+    
+    switch (typeProduct) {
+      case 'Credit Card':
+        return creditCardGenerator.generate('Mastercard')
+      default:
+        return this.numberRamdon()
+    }
+  }
+
+  private async createProduct(solicitudId: any) {
+    const data = await this.databaseLib.getById(PetitonProduct, solicitudId)
+    console.log("DAta=>", data)
+
+
+    const numberProduct = this.generateNumberAccount('')
+    console.log("=>numberProduct", numberProduct)
+    // const dataProduct ={
+    //   number_product: numberProduct,
+    //   client: data.client,
+    //   TypeProduct: data.type_product
+    // }
+
+    // await this.databaseLib.create(Product, dataProduct)
   }
 }
 

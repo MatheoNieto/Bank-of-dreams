@@ -6,8 +6,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BaseEntity,
-  ManyToOne,
-  AfterUpdate
+  ManyToOne
 } from 'typeorm'
 
 import {Client} from './Client'
@@ -29,6 +28,9 @@ export class PetitonProduct extends BaseEntity {
   @Column({ type: 'enum', enum: stateSolicitude, default: stateSolicitude.pending })
   state_petition!: stateSolicitude
 
+  @Column('boolean', { default: false })
+  close!: boolean;
+
   @Column('boolean', { default: true })
   active!: boolean;
 
@@ -37,10 +39,5 @@ export class PetitonProduct extends BaseEntity {
 
   @UpdateDateColumn({ type: 'timestamp'})
   updateAt!: Date
-
-  @AfterUpdate()
-  updateDates() {
-    console.log("==>updatadddekjsdkfj")
-  }
 
 }

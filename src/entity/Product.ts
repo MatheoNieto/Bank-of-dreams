@@ -8,7 +8,8 @@ import {
   ManyToOne
 } from 'typeorm'
 
-import {TypeProduct} from './TypeProduct'
+import { TypeProduct } from './TypeProduct'
+import { Client } from './Client'
 
 @Entity()
 export class Product extends BaseEntity {
@@ -19,16 +20,19 @@ export class Product extends BaseEntity {
   @Column('varchar', { length: 100, unique: true })
   number_product!: string
 
+  @ManyToOne(type => Client, client => client.id)
+  client!: Client
+
   @ManyToOne(type => TypeProduct, typeProduct => typeProduct.id)
   type_product!: TypeProduct
 
   @Column('boolean', { default: true })
   active!: boolean;
 
-  @CreateDateColumn({ type: 'timestamp'})
+  @CreateDateColumn({ type: 'timestamp' })
   createdAt!: Date
 
-  @UpdateDateColumn({ type: 'timestamp'})
+  @UpdateDateColumn({ type: 'timestamp' })
   updateAt!: Date
 
 }

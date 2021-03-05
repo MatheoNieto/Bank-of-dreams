@@ -58,7 +58,7 @@ Router.put('/attend-solicitude/:solicitudId',
       const { body: responseSolitude, params: {solicitudId} } = req
 
       const newPetitionProduct = await serviceProducts.attendSolicitude(req, solicitudId, responseSolitude)
-      response.success(req, res, 'Change state solicitude.', newPetitionProduct, 200)
+      response.success(req, res, `Petition product ${responseSolitude.state_petition} success.`, newPetitionProduct, 200)
 
     } catch (err) {
       next(err)

@@ -59,8 +59,8 @@ class serviceBase extends SuperClass {
   updateData(entity: any, request: any, dataId: any, newdata: any) {
     return new Promise(async (resolve, reject) => {
 
-      await this.databaseLib.update(entity, dataId, newdata)
-      resolve('Update success')
+      const dataUpdated = await this.databaseLib.update(entity, dataId, newdata)
+      resolve(dataUpdated)
     })
   }
 

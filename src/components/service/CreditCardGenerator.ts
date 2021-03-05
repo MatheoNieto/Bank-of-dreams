@@ -32,7 +32,7 @@ class CreditCardGenerator {
     return CreditCardGenerator.instance
   }
 
-  private strrev(str: string) {
+  private convertString(str: string) {
     if (!str) return ''
     let revstr = ''
     for (let i = str.length - 1; i >= 0; i--)
@@ -40,24 +40,7 @@ class CreditCardGenerator {
     return revstr
   }
 
-  private completedNumber(prefix: any, length: number) {
-    let ccnumber = prefix
-
-    // generate digits
-    while (ccnumber.length < (length - 1)) {
-      ccnumber += Math.floor(this.pseudoRandom() * 10)
-    }
-
-    // reverse number and convert to int
-    const reversedCCnumberString = this.strrev(ccnumber)
-
-    let reversedCCnumber = []
-    for (let i = 0; i < reversedCCnumberString.length; i++) {
-      reversedCCnumber[i] = parseInt(reversedCCnumberString.charAt(i))
-    }
-
-    // calculate sum
-
+  private calculateSum(ccnumber:any, reversedCCnumber:any, length:number){
     let sum = 0
     let pos = 0
 
@@ -83,6 +66,24 @@ class CreditCardGenerator {
     ccnumber += checkdigit
 
     return ccnumber
+  }
+  
+  private completedNumber(prefix: any, length: number) {
+    let ccnumber = prefix
+
+    // generate digits
+    while (ccnumber.length < (length - 1)) {
+      ccnumber += Math.floor(this.pseudoRandom() * 10)
+    }
+
+    const reversedCCnumberString = this.convertString(ccnumber)
+
+    let reversedCCnumber = []
+    for (let i = 0; i < reversedCCnumberString.length; i++) {
+      reversedCCnumber[i] = parseInt(reversedCCnumberString.charAt(i))
+    }
+
+    return this.calculateSum(ccnumber, reversedCCnumber, length)
 
   }
 
@@ -92,22 +93,17 @@ class CreditCardGenerator {
     const ccnumber = prefixList[randomArrayIndex]
     result.push(this.completedNumber(ccnumber, length))
 
+    return result
   }
 
-  public generate(CardScheme: string) {
+  public generate(CardScheme = 'MasterCard') {
+
     // Try to get configs to the selected Scheme
-    if (typeof this.schema[CardScheme] != 'undefined') {
-      return this.creditCardNumber(
-        this.schema[CardScheme].prefixList,
-        this.schema[CardScheme].digitCount,
-      )
-    }
-    else { // Defaults to MasterCard
-      return this.creditCardNumber(
-        this.schema["MasterCard"].prefixList,
-        this.schema["MasterCard"].digitCount,
-      )
-    }
+    return this.creditCardNumber(
+      this.schema[CardScheme].prefixList,
+      this.schema[CardScheme].digitCount,
+    )
+
   }
 }
 

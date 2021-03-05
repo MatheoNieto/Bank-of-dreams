@@ -83,8 +83,9 @@ class ServiceProducts extends ServiceBase {
         if (data.state_petition == 'Accepted') {
           await this.createProduct(solicitudId)
         }
-        await this.updateData(PetitonProduct, request, solicitudId, data)
-        resolve(`Petition product ${data.state_petition} success.`)
+        data['close'] = true
+        const solcitudAttended= await this.updateData(PetitonProduct, request, solicitudId, data)
+        resolve(solcitudAttended)
       }
 
       reject(boom.badRequest('The solicitude already state close.'))
@@ -98,34 +99,33 @@ class ServiceProducts extends ServiceBase {
   }
 
   private async numberRamdon() {
-    return randomize('0', 10)
+    return randomize('0', 12)
   }
 
   private async generateNumberAccount(typeProduct: string) {
     const creditCardGenerator = CreditCardGenerator.getInstance()
-    
+
     switch (typeProduct) {
       case 'Credit Card':
-        return creditCardGenerator.generate('Mastercard')
+        return creditCardGenerator.generate()
       default:
         return this.numberRamdon()
     }
   }
 
   private async createProduct(solicitudId: any) {
-    const data = await this.databaseLib.getById(PetitonProduct, solicitudId)
-    console.log("DAta=>", data)
+    const data = await this.databaseLib.getByIdRelations(PetitonProduct, solicitudId, ['client', 'type_product'])
 
+    const type_product_create = data.type_product.name
 
-    const numberProduct = this.generateNumberAccount('')
-    console.log("=>numberProduct", numberProduct)
-    // const dataProduct ={
-    //   number_product: numberProduct,
-    //   client: data.client,
-    //   TypeProduct: data.type_product
-    // }
+    const numberProduct = await this.generateNumberAccount(type_product_create)
+    const dataProduct = {
+      number_product: numberProduct,
+      client: data.client,
+      type_product: data.type_product
+    }
 
-    // await this.databaseLib.create(Product, dataProduct)
+    await this.databaseLib.create(Product, dataProduct)
   }
 }
 

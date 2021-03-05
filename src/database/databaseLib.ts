@@ -53,6 +53,18 @@ class DatabaseLib {
     })
   }
 
+  public getByIdRelations(entity: any, id: any, dataRelation:any) {
+    return this.connect().then(async (db: any) => {
+      return await db.manager.findOne(entity, {
+        relations: dataRelation,
+        where: {
+          id,
+          active: true,
+        }
+      })
+    })
+  }
+
   public getByQuery(entity: any, query: any) {
 
     return this.connect().then(async (db: any) => {

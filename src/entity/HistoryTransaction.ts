@@ -10,6 +10,7 @@ import {
 } from 'typeorm'
 
 import { Product } from './Product'
+import {TypesTransaction} from '../prototypes/typeTransaction'
 
 @Entity()
 export class HistoryTransaction extends BaseEntity {
@@ -17,6 +18,9 @@ export class HistoryTransaction extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   id!: number
 
+  @Column({ type: 'enum', enum: TypesTransaction, default: TypesTransaction.shoping })
+  type_trasaction!: TypesTransaction
+  
   @Column('varchar', { length: 100 })
   detail_trasaction!: string
 

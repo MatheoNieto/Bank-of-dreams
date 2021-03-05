@@ -4,7 +4,7 @@ import {
   typesConfigHost,
   typesConfigDb,
   typesConfigAuth,
-} from '../prototypes/types_settings'
+} from '../prototypes/typesSettings'
 
 export const config: any = {
   default_from_email: process.env.DEFAULT_FROM_EMAIL || 'matheo.developer@gmail.com',

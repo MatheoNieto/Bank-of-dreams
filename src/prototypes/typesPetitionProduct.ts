@@ -1,5 +1,5 @@
 export enum stateSolicitude {
-  pending = "Pending",
-  accepted = "Accepted",
-  rejected = "Reject",
+  pending = 'Pending',
+  accepted = 'Accepted',
+  rejected = 'Reject',
 }

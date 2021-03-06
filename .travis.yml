@@ -2,23 +2,28 @@ language: node_js
 node_js:
   - 14
 
+os: linux
 sudo: required
 
 services:
   - docker
 
 env:
-  DOCKER_COMPOSE_VERSION: 3.3
+  DOCKER_COMPOSE_VERSION: 1.9.0
 
 before_install:
+  - sudo apt-get update
   - sudo rm /usr/local/bin/docker-compose
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
+  - docker --version
+  - docker-compose --version
+  - npm install --global yarn 
 
 before_script:
-  - docker-compose up -d --build
-
+  - yarn install
+  - docker-compose up -d
 
 after_script:
   - docker-compose down

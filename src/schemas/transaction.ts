@@ -15,5 +15,12 @@ export const createSchema = Joi.object({
 
 })
 
+export const reportSchema = Joi.object({
+  date_start: Joi.date()
+    .required(),
+
+  date_end: Joi.date()
+    .required(),
+})
 
 

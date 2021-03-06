@@ -3,7 +3,7 @@ import passport from 'passport'
 
 import validationHandler from '../../middleware/validationHandler'
 import ServiceTransaction from './service'
-import { createSchema } from '../../schemas/transaction'
+import { createSchema, reportSchema } from '../../schemas/transaction'
 
 
 import * as response from '../../network/response'
@@ -33,6 +33,20 @@ Router.get('/:productId',
 
       const historyTrasaction = await serviceTransaction.listTrasactions(req, productId)
       response.success(req, res, 'Transactions', historyTrasaction, 200)
+
+    } catch (err) {
+      next(err)
+    }
+  })
+
+Router.get('/report/',
+  passport.authenticate('jwt', { session: false }),
+  validationHandler(reportSchema, 'query'),
+  async (req, res, next) => {
+    try {
+
+      const historyTrasaction = await serviceTransaction.reportTrasactions(req)
+      response.success(req, res, 'Transactions Avarage', historyTrasaction, 200)
 
     } catch (err) {
       next(err)

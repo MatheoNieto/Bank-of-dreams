@@ -34,24 +34,73 @@ class ServiceTransaction extends ServiceBase {
     })
   }
 
-  private async getHistorialByIdProduct(request: Request, productId: any) {
+  public reportTrasactions(request: Request) {
+    return new Promise(async (resolve, reject) => {
+      const getProducts = await this.getAllHistoria(request)
+
+      if (!getProducts || getProducts.length == 0) {
+        reject(boom.notFound('Empty trasactions'))
+      }
+
+      console.log("=>getProducts", getProducts)
+
+      const filterProducts = await this.getFilterProducts(request, getProducts)
+      const promedio = await this.promedioTrasactions(filterProducts)
+
+      resolve(promedio)
+    })
+  }
+
+  private async promedioTrasactions(products: any) {
+    return products.map((product: any) => {
+      const { transactions } = product
+      const data = {
+        ...product,
+        average_transactions: transactions.length
+      }
+
+      return data
+    })
+
+  }
+
+  private getFilterProducts(request: Request, products: any) {
+    const { date_start, date_end } = request.query
+
+    if (!date_start || !date_end) {
+      return
+    }
+
+    return products.filter((product: any) => {
+      const { transactions } = product
+      if (date_start >= transactions.createdAt && date_end <= transactions.createdAt) {
+        return product
+      }
+    })
+
+  }
+
+  private async getProductsClient(request: Request) {
     const client = request.user
-    const getProduct = await this.databaseLib.getByClientId(Product, client, productId)
+    return await this.databaseLib.getByClient(Product, client)
+  }
+
+
+  private async getHistorialByIdProduct(request: Request, productId: any) {
+    const getProduct = await this.getProduct(productId, request)
 
     const getHistorial = await this.databaseLib.getTestHistorial(HistoryTransaction, getProduct)
 
-    const dataResponse = {
+    return {
       ...getProduct,
       transactions: getHistorial
     }
-    return dataResponse
   }
 
   private async getAllHistoria(request: Request) {
-    const client = request.user
     let result = []
 
-    const getProducts = await this.databaseLib.getByClient(Product, client)
+    const getProducts = await this.getProductsClient(request)
 
     for (let i = 0; i < getProducts.length; i++) {
       let product = getProducts[i]
@@ -70,10 +119,10 @@ class ServiceTransaction extends ServiceBase {
 
   private async getProduct(productId: any, request?: Request) {
     if (!request) {
-      return await this.databaseLib.getByIdRelations(Product, productId, ['type_product'])
+      return await this.databaseLib.getById(Product, productId)
     }
     const { user } = request
-    return await this.databaseLib.getByIdClientRelations(Product, user, productId, ['type_product'])
+    return await this.databaseLib.getByClientId(Product, user, productId)
   }
 
   public createTransaction(request: Request, productId: any, dataTransaction: any) {

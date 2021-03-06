@@ -42,8 +42,6 @@ class ServiceTransaction extends ServiceBase {
         reject(boom.notFound('Empty trasactions'))
       }
 
-      console.log("=>getProducts", getProducts)
-
       const filterProducts = await this.getFilterProducts(request, getProducts)
       const promedio = await this.promedioTrasactions(filterProducts)
 

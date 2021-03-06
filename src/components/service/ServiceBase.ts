@@ -4,7 +4,7 @@ import SuperClass from './SuperClass'
 
 class serviceBase extends SuperClass {
 
-  private filterData(filter: any, data: any) {
+  protected filterData(filter: any, data: any) {
     if (this.isEmptyObject(filter)) {
       return data
     }

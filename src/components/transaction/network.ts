@@ -17,8 +17,22 @@ Router.get('/',
   passport.authenticate('jwt', { session: false }),
   async (req, res, next) => {
     try {
-      const products = ''
-      response.success(req, res, 'Transactions', products, 200)
+      const historiesTrasanctions = await serviceTransaction.listTrasactions(req)
+      response.success(req, res, 'Transactions', historiesTrasanctions, 200)
+
+    } catch (err) {
+      next(err)
+    }
+  })
+
+Router.get('/:productId',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res, next) => {
+    try {
+      const { productId } = req.params
+
+      const historyTrasaction = await serviceTransaction.listTrasactions(req, productId)
+      response.success(req, res, 'Transactions', historyTrasaction, 200)
 
     } catch (err) {
       next(err)

@@ -72,7 +72,7 @@ class ServicePetitionProducts extends ServiceBase {
         }
 
         data['close'] = true
-        const solcitudAttended = await this.updateData(PetitonProduct, solicitudId, data, request)
+        await this.updateData(PetitonProduct, solicitudId, data, request)
         const soliccitud = await this.getPetitionProduct(solicitudId)
         resolve(soliccitud)
       }

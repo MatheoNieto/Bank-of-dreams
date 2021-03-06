@@ -65,10 +65,34 @@ class DatabaseLib {
     })
   }
 
+  public getByIdClientRelations(entity: any, dataClient:any, id: any, dataRelation:any) {
+    return this.connect().then(async (db: any) => {
+      return await db.manager.findOne(entity, {
+        relations: dataRelation,
+        where: {
+          id,
+          client: dataClient,
+          active: true,
+        }
+      })
+    })
+  }
+
   public getByQuery(entity: any, query: any) {
 
     return this.connect().then(async (db: any) => {
       return await db.manager.findOne(entity, query)
+    })
+  }
+
+  public getTestHistorial(entity: any, producto: any) {
+
+    return this.connect().then(async (db: any) => {
+      return await db.manager.find(entity, {
+        where: {
+          product: producto
+        }
+      })
     })
   }
 
@@ -87,7 +111,7 @@ class DatabaseLib {
   public getByClientId(entity: any, dataClient: any, dataId:any) {
 
     return this.connect().then(async (db: any) => {
-      return await db.manager.find(entity, {
+      return await db.manager.findOne(entity, {
         where:{
           id: dataId,
           client: dataClient,

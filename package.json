@@ -6,12 +6,17 @@
   "author": "Mateo Nieto Hoyos <matheo.developer@gmail.com>",
   "license": "GPL3",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "npm run build && node ./dist/index.js",
     "dev": "nodemon src/index.ts --exec ts-node",
     "build": "npm run clean && tsc",
+    "clean": "rimraf ./dist ./coverage",
     "update": "yarn upgrade-interactive --latest",
-    "clean": "rimraf ./dist ./data ./coverage",
-    "makemigrations": "npx ts-node ./node_modules/.bin/typeorm migration:generate -n",
+
+    "dev:test": "npm run build && jest ./dist/ --watch",
+    "test:report": "npm run build && jest .,/dist/ --coverage",
+    "test": "npm run build && jest ./dist/",
+
+    "makemigrations": "npx ts-node ./node_modules/.bin/typeorm migration:generate -n $",
     "migrate": "npx ts-node ./node_modules/.bin/typeorm migration:run",
     "revermigrate": "npx ts-node ./node_modules/.bin/typeorm migration:revert"
   },
@@ -42,6 +47,7 @@
     "@types/cookie-parser": "1.4.2",
     "@types/cors": "2.8.10",
     "@types/express": "4.17.11",
+    "@types/jest": "^26.0.20",
     "@types/jsonwebtoken": "8.5.0",
     "@types/morgan": "1.9.2",
     "@types/node": "14.14.31",
@@ -49,9 +55,12 @@
     "@types/passport-http": "0.3.8",
     "@types/passport-jwt": "3.0.5",
     "@types/randomatic": "3.1.0",
+    "@types/supertest": "^2.0.10",
+    "jest": "^26.6.3",
     "morgan": "1.10.0",
     "nodemon": "2.0.7",
     "rimraf": "3.0.2",
+    "supertest": "^6.1.3",
     "ts-node": "9.1.1",
     "typescript": "4.2.2"
   }

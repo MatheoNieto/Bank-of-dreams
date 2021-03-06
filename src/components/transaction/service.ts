@@ -54,9 +54,13 @@ class ServiceTransaction extends ServiceBase {
   private async promedioTrasactions(products: any) {
     return products.map((product: any) => {
       const { transactions } = product
+      const averageTrasactions = transactions.length
+
+      delete product.transactions
+      
       const data = {
         ...product,
-        average_transactions: transactions.length
+        average_transactions: averageTrasactions
       }
 
       return data
@@ -65,19 +69,29 @@ class ServiceTransaction extends ServiceBase {
   }
 
   private getFilterProducts(request: Request, products: any) {
-    const { date_start, date_end } = request.query
 
-    if (!date_start || !date_end) {
-      return
-    }
 
-    return products.filter((product: any) => {
+    return products.filter(async (product: any) => {
       const { transactions } = product
-      if (date_start >= transactions.createdAt && date_end <= transactions.createdAt) {
-        return product
-      }
+
+      const newTrasactions = await this.filterTransactions(request, transactions)
+      product['transactions'] = newTrasactions
+      
+      return product
     })
 
+  }
+
+  private filterTransactions(request: Request, transactions: any) {
+    const { date_start, date_end }: any = request.query
+
+    return transactions.filter((transaction: any) => {
+
+      const isBetwwen = this.filterDates(transaction.updateAt, date_start, date_end)
+      if (isBetwwen) {
+        return transaction
+      }
+    })
   }
 
   private async getProductsClient(request: Request) {

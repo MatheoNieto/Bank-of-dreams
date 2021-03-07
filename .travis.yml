@@ -16,7 +16,7 @@ services:
 
 env:
   DOCKER_COMPOSE_VERSION: 1.9.0
-  
+
 
 before_install:
   - sudo apt-get update
@@ -44,8 +44,8 @@ deploy:
   - provider: s3
   - provider: codedeploy
     access_key_id: $ACCESS_KEY_ID_AWS
-    secret_access_key: "$SECRET_ACCESS_KEY_AWS
+    secret_access_key: $SECRET_ACCESS_KEY_AWS
     bucket: "S3 Bucket"
-    key: latest/MyApp.zip
-    application: MyApp
-    deployment_group: MyDeploymentGroup
+    application: BankOfDreams
+    deployment_group: Bank_of_dreams_deployment_group
+    skip_cleanup: true

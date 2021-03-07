@@ -11,7 +11,7 @@ import {
 
 import {Client} from './Client'
 import {TypeProduct} from './TypeProduct'
-import {stateSolicitude} from '../prototypes/typesPetitionProduct'
+
 
 @Entity()
 export class PetitonProduct extends BaseEntity {
@@ -25,8 +25,8 @@ export class PetitonProduct extends BaseEntity {
   @ManyToOne(type => TypeProduct, typeProduct => typeProduct.id)
   type_product!:TypeProduct
 
-  @Column({ type: 'enum', enum: stateSolicitude, default: stateSolicitude.pending })
-  state_petition!: stateSolicitude
+  @Column('varchar', { length: 50 })
+  state_petition!: string
 
   @Column('boolean', { default: false })
   close!: boolean;

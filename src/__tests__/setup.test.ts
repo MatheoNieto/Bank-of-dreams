@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import { createConnection, getConnection } from 'typeorm'
 import path from 'path'
 
@@ -5,11 +6,11 @@ import path from 'path'
 beforeAll(() => {
   console.log('[CREATE DATABASE TESTS]')
   return createConnection({
-    type: "sqlite",
-    database: ":memory:",
+    type: 'sqlite',
+    database: ':memory:',
     dropSchema: true,
     entities: [
-      path.join(__dirname, '/../entity/**/**.ts')
+      path.join(__dirname, '/../test-utils/entity/**/**.ts')
     ],
     synchronize: true,
     logging: false
@@ -22,8 +23,7 @@ beforeAll(() => {
 // despues de cada prueba
 // afterEach(() => console.log('Despues de cada prueba'));
 afterAll(() => {
-  let conn = getConnection();
-  return conn.close()
+  
 });
 
 describe('preparar antes de ejecutar', () => {

@@ -9,15 +9,14 @@ import {
 } from 'typeorm'
 
 import {Product} from './Product'
-import {CivilStatus, Gender, TypeDocuments} from '../prototypes/typesClients'
 @Entity()
 export class Client extends BaseEntity {
 
   @PrimaryGeneratedColumn('increment')
   id!: number
 
-  @Column({ type: 'enum', enum: TypeDocuments, default: TypeDocuments.dni })
-  type_document!: TypeDocuments
+  @Column('varchar', { length: 50 })
+  type_document!: string
 
   @Column('varchar', { length: 50 })
   number_document!: string
@@ -40,14 +39,14 @@ export class Client extends BaseEntity {
   @Column({ type: 'date', nullable: true })
   date_birtday!: Date
 
-  @Column({ type: 'enum', enum: Gender, default: Gender.m })
-  gender!: Gender
+  @Column('varchar', { length: 50 })
+  gender!: string
 
   @OneToMany(type => Product, product => product.id)
   product!: Product
 
-  @Column({ type: 'enum', enum: CivilStatus, default: CivilStatus.single })
-  civil_status!: CivilStatus
+  @Column('varchar', { length: 50 })
+  civil_status!: string
 
   @Column('boolean', { default: true })
   active!: boolean;

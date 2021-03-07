@@ -60,6 +60,6 @@ Una vez haya establecido las variables de entorno se levanta los servicios de do
 sudo docker-compose up
 ```
 
-una vez se haya iniciado los servicios podemos cosumir los servicios de la API con postman, en el siguiente link ingresa a la collection de postman 
+una vez se haya iniciado los servicios podemos cosumir los servicios de la API con postman, en el siguiente link ingresa a la [collection de postman](https://documenter.getpostman.com/view/7841348/Tz5jfg2o) 
 ## Licencia 📄
 Este proyecto está bajo la Licencia (GPL-3.0) - mira el archivo [LICENSE](LICENSE) para detalles

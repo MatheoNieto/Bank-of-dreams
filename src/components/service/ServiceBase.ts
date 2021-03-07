@@ -29,18 +29,21 @@ class serviceBase extends SuperClass {
         client = request.user
       }
 
-      if (!this.isEmptyObject(client)) {
-        if (!dataId) {
-          get_data = await this.databaseLib.getByClient(entity, client)
-        } else {
-          get_data = await this.databaseLib.getByClientId(entity, client, dataId)
-        }
-      } else {
+      console.log("=>client", client)
+      
+      if (!client) {
         if (!dataId) {
           get_data = await this.databaseLib.getAll(entity)
         } else {
           get_data = await this.databaseLib.getById(entity, dataId)
         }
+      } else {
+        if (!dataId) {
+          get_data = await this.databaseLib.getByClient(entity, client)
+        } else {
+          get_data = await this.databaseLib.getByClientId(entity, client, dataId)
+        }
+        
       }
 
       if (!get_data || get_data.length == 0) {

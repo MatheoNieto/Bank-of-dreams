@@ -33,10 +33,6 @@ before_script:
   - yarn install
   - docker-compose up -d
 
-script:
-  - yarn test
-  - yarn build
-
 after_script:
   - docker-compose down
 

@@ -45,14 +45,6 @@ NODE_ENV ['development', 'production']
 ====> ESTAS VARIABLES SON PARA LOS JWT PARA LA AUTENTICACIÓN <===
 ACCESS_TOKEN_SECRET
 REFRESS_TOKEN_SECRET
-
-====> ESTAS VARIABLES SON PARA EL USO DE AMAZON SES EL CUAL ENVÍA LOS CORREOS AL CLIENTE <===
-ACCESSKEYID
-SECRETACCESSKEY
-REGION
-
-USER_SES
-PASSWOR_SES
 ```
 Una vez haya establecido las variables de entorno se levanta los servicios de docker-compose:
 

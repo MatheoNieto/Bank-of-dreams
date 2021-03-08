@@ -37,11 +37,13 @@ after_script:
   - docker-compose down
 
 deploy:
-  - provider: s3
-  - provider: codedeploy
+    provider: codedeploy
     access_key_id: $ACCESS_KEY_ID_AWS
     secret_access_key: $SECRET_ACCESS_KEY_AWS
-    bucket: "S3 Bucket"
+    bucket: "codepipeline-us-east-2-328640780523"
+    key: latest/MyApp.zip
     application: BankOfDreams
     deployment_group: Bank_of_dreams_deployment_group
     skip_cleanup: true
+    on:
+      branch: main
